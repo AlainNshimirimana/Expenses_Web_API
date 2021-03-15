@@ -48,5 +48,12 @@ namespace Expenses.WebAPI.Controllers
             _expensesServices.DeleteExpense(expense);
             return Ok();
         }
+
+        //update an existing expense
+        [HttpPut]
+        public IActionResult UpdateExpense(Expense expense)
+        {
+            return Ok(_expensesServices.UpdateExpense(expense));
+        }
     }
 }

@@ -41,5 +41,15 @@ namespace Expenses.Core
         {
             return _context.Expenses.ToList();
         }
+
+        public Expense UpdateExpense(Expense expense)
+        {
+            var dbExpense = _context.Expenses.First(e => e.Id == expense.Id); // 1st find the expense that you want to update
+            dbExpense.Description = expense.Description;  //update the old description with the new
+            dbExpense.Amount = expense.Amount; //update the amount
+            _context.SaveChanges(); //save the new changes
+
+            return dbExpense;
+        }
     }
 }
