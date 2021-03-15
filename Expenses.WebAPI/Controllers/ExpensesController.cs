@@ -24,5 +24,12 @@ namespace Expenses.WebAPI.Controllers
             // return ok(), which means successful
             return Ok(_expensesServices.GetExpenses());
         }
+
+        // The following will return an expense when given an id
+        [HttpGet("{id}", Name = "GetExpense")]
+        public IActionResult GetExpense(int id)
+        {
+            return Ok(_expensesServices.GetExpense(id));
+        }
     }
 }
