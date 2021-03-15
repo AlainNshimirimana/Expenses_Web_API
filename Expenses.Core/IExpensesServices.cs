@@ -9,5 +9,6 @@ namespace Expenses.Core
     {
         List<Expense> GetExpenses();
         Expense GetExpense(int id);
+        Expense CreateExpense(Expense expense);
     }
 }

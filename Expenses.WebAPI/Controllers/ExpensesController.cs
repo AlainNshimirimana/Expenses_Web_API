@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Expenses.Core;
+using Expenses.DB;
 
 namespace Expenses.WebAPI.Controllers
 {
@@ -30,6 +31,14 @@ namespace Expenses.WebAPI.Controllers
         public IActionResult GetExpense(int id)
         {
             return Ok(_expensesServices.GetExpense(id));
+        }
+
+        // create a new expense and return 201 status code
+        [HttpPost]
+        public IActionResult CreateExpense(Expense expense)
+        {
+            var newExpense = _expensesServices.CreateExpense(expense);
+            return CreatedAtRoute("GetExpense", new { newExpense.Id }, newExpense); ;
         }
     }
 }

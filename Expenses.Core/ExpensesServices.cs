@@ -14,6 +14,15 @@ namespace Expenses.Core
             _context = context;
         }
 
+        // This will be used to add expenses to the list of expenses
+        public Expense CreateExpense(Expense expense)
+        {
+            _context.Add(expense); 
+            _context.SaveChanges();  // saves the new expense to the database
+
+            return expense;
+        }
+
         // pass in an id and return an expense with that same id
         public Expense GetExpense(int id)
         {
