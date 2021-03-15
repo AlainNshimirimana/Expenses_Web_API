@@ -1,6 +1,7 @@
 ﻿using Expenses.DB;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Expenses.Core
 {
@@ -14,7 +15,7 @@ namespace Expenses.Core
         }
         public List<Expense> GetExpenses()
         {
-            throw new NotImplementedException();
+            return _context.Expenses.ToList();
         }
     }
 }
