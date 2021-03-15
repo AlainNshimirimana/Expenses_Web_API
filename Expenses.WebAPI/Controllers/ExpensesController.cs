@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Expenses.Core;
+using Expenses.DB;
 
 namespace Expenses.WebAPI.Controllers
 {
@@ -11,15 +13,47 @@ namespace Expenses.WebAPI.Controllers
     [Route("[controller]")]
     public class ExpensesController : ControllerBase
     {
-
-        public ExpensesController()
+        private IExpensesServices _expensesServices;
+        public ExpensesController(IExpensesServices expensesServices)
         {
+            _expensesServices = expensesServices;
         }
 
         [HttpGet]
         public IActionResult GetExpenses()
         {
+            // return ok(), which means successful
+            return Ok(_expensesServices.GetExpenses());
+        }
 
+        // The following will return an expense when given an id
+        [HttpGet("{id}", Name = "GetExpense")]
+        public IActionResult GetExpense(int id)
+        {
+            return Ok(_expensesServices.GetExpense(id));
+        }
+
+        // create a new expense and return 201 status code
+        [HttpPost]
+        public IActionResult CreateExpense(Expense expense)
+        {
+            var newExpense = _expensesServices.CreateExpense(expense);
+            return CreatedAtRoute("GetExpense", new { newExpense.Id }, newExpense); ;
+        }
+
+        // delete an expense from database
+        [HttpDelete]
+        public IActionResult DeleteExpense(Expense expense)
+        {
+            _expensesServices.DeleteExpense(expense);
+            return Ok();
+        }
+
+        //update an existing expense
+        [HttpPut]
+        public IActionResult UpdateExpense(Expense expense)
+        {
+            return Ok(_expensesServices.UpdateExpense(expense));
         }
     }
 }

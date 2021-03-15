@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Expenses.DB;
+using Expenses.Core;
 
 namespace Expenses.WebAPI
 {
@@ -28,6 +29,11 @@ namespace Expenses.WebAPI
         {
             services.AddControllers();
             services.AddDbContext<AppDbContext>();
+            services.AddTransient<IExpensesServices, ExpensesServices>();
+            services.AddSwaggerDocument(settings =>
+            {
+                settings.Title = "Expenses";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +49,8 @@ namespace Expenses.WebAPI
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
 
             app.UseEndpoints(endpoints =>
             {
